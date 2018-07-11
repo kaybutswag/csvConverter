@@ -9,4 +9,4 @@ Process:
 2. Links are reviewed for errors, and app parses data if there is a space or comma
 3. NPM Request returns a long link
 4. CSV file is written called "newLinks.csv"
-5. When file is ready, "Download" button appears. Otherwise "Error Occured Appears"
+5. When file is ready, "Download" button appears. Otherwise "Error Occured" Appears
