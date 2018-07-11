@@ -10,8 +10,7 @@ var PORT = process.env.PORT || 8000;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-// app.use(express.static("public"));
-app.use('/static', express.static(path.join(__dirname, 'public')));
+app.use(express.static(__dirname + '/public'));
 
 
 var longURLs=[],ids=[], shortLinks=[],sortedURLs=[],allData=[];
@@ -34,13 +33,14 @@ app.post("/runrequest", function (req,res){
 
     });
 
+//some links fail, if it hasn't been solved in 5 seconds we are moving on
     setTimeout( function(){
                 var _longURLs=longURLs;
                 sortLongUrls(_longURLs,res);
 
               }, 5000 );
 
-
+//gets link and processes the rest
 
     function expandUrl(element,index) {
             if(element==="No Link"){
@@ -65,6 +65,7 @@ app.post("/runrequest", function (req,res){
         }
 
 
+//put long links in order of original files
 
     function sortLongUrls(crayArray, res){
 
@@ -87,18 +88,18 @@ app.post("/runrequest", function (req,res){
         objectify(ids, shortLinks, sortedURLs, res);
     }
 
+//create object for csv file
     function objectify(col1,col2,col3,res){
         for (var i=0;i<ids.length;i++){
             allData.push({"Channel Post ID": col1[i], "Short Link":col2[i], "Long Link": col3[i]});
         }
 
         var csv = papa.unparse(allData);
-        var thispath=path.join(__dirname, "/public/index.html");
+        var thispath=path.join(__dirname, "/public/assets/newLinks.csv");
             writeFile(thispath, csv, function (err) {
               if (err) return console.log(err)
-              console.log('file is written')
+              // console.log('file is written')
             });
-        console.log("out of loop");
         res.json("done");
        
     }

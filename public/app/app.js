@@ -1,82 +1,77 @@
-var data;
-var ch;
-var toSearch=[];
+    var fileData;
+    var toSearch=[], ids=[], newString="",shortLink="";
 
-  function handleFileSelect(evt) {
+     $(document).ready(function(){
+    $("#csv-file").change(handleFileSelect);
+      });
+
+     // triggers when file is uploaded
+    function handleFileSelect(evt) {
     evt.preventDefault();
+    $(".buttonDiv").html("<p>Wait for it....</p>");
     var file = evt.target.files[0];
- 
+
+// change file to JSON
     Papa.parse(file, {
       header: true,
       dynamicTyping: true,
       complete: function(results) {
-        data = results;
-        console.log(data);
-        getLinks();
+        fileData = results.data;
+        // console.log(fileData);
+        shrinkData(fileData)
       }
     });
+
+    //format short links and extract ids
+    function shrinkData(longData){
+    var index=0;
+
+    for (var i=0;i<longData.length;i++){
+      ids.push(longData[i]["Channel Post ID"]);
+        shortLink=longData[i]["Link"];
+       if (shortLink===null)
+          newString="No Link";
+       else if (shortLink.indexOf(',')!==-1){
+          index = shortLink.indexOf(',');
+          newString= shortLink.substring(0, index);
+      }
+       else if (shortLink.indexOf(' ')!==-1){
+          index = shortLink.indexOf(' ');
+          newString= shortLink.substring(0, index);
+      }
+       else newString=shortLink;
+
+       toSearch.push(newString);
+      }
+      sendData(ids,toSearch);
+
   }
 
-  function getLinks(){
-    // console.log(data.data[0]);
-    console.log(data.data[0].Link);
-
-
-    // unshorten_url(data.data[0].Link);
-    runQuery(data.data[0].Link);
-
-    // for (var i=0;i<data.data.length;i++){
-    //  toSearch.push(data.data[i].Link);
-    // }
-    // console.log(toSearch);
-
-  }
-
-// function unshorten_url(url) {
-//   ch = curl_init(url);
-//   curl_setopt_array(ch, array(
-//     CURLOPT_FOLLOWLOCATION => TRUE,  // the magic sauce
-//     CURLOPT_RETURNTRANSFER => TRUE,
-//     CURLOPT_SSL_VERIFYHOST => FALSE, // suppress certain SSL errors
-//     CURLOPT_SSL_VERIFYPEER => FALSE, 
-//   ));
-//   curl_exec(ch); 
-//   return curl_getinfo(ch, CURLINFO_EFFECTIVE_URL);
-// }
-
-
-
-function runQuery(queryURL) {
-  // o_44bue6v1qm
-  // R_96273b3fa9194264b98f7b03b337d4e4
-
-  // $.ajax({
-  //   url: "https://api-ssl.bitly.com/v3/expand?login=o_44bue6v1qm&apiKey=R_96273b3fa9194264b98f7b03b337d4e4&shortUrl=https%3A%2F%2Ft.co%2FwpC3fVTTqc",
-  //   type: 'GET'
+//rest of app performed server side
+    function sendData(channelIds,URLs) {
     $.ajax({
     method: "POST",
-    url: "/runRequest"
+    url: "/runrequest",
+    dataType: 'json',
     data: {
-     url: queryURL
-   }
+     idArray: channelIds,
+     shortURL: URLs
+    }
   })
   .then(function(data) {
+    // console.log(data);
 
-    // Logging the URL so we have access to it for troubleshooting
-    console.log("------------------------------------");
-    console.log("URL: " + queryURL);
-    console.log("------------------------------------");
+      if(data==="done"){
+        $(".buttonDiv").html("<a href='/assets/newLinks.csv' target='_blank' download><button>Download File</button></a>");
+      }
 
-    // Log the NYTData to console, where it will show up as an object
-    console.log(data);
-    console.log("------------------------------------");
+      else{
+        $(".buttonDiv").html("<p>Error Occurred</p>");
+      }
 
-  });
-}
-
-
-  $(document).ready(function(){
-    $("#csv-file").change(handleFileSelect);
-  });
-
+    });
+  }
+   
+      
+  }
 
