@@ -38,7 +38,7 @@ app.post("/runrequest", function (req,res){
                 var _longURLs=longURLs;
                 sortLongUrls(_longURLs,res);
 
-              }, 5000 );
+              }, 10000 );
 
 //gets link and processes the rest
 
