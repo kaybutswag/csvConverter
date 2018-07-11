@@ -4,17 +4,15 @@
   "description": "",
   "main": "app.js",
   "dependencies": {
-    "babyparse": "^0.4.6",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "papaparse": "^4.5.0",
-    "request": "^2.87.0",
-    "request-promise": "^4.2.2",
-    "write": "^1.0.3"
+    "request": "^2.87.0"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC"
