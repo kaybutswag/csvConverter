@@ -2,13 +2,15 @@
     var toSearch=[], ids=[], newString="",shortLink="";
 
      $(document).ready(function(){
-    $("#csv-file").change(handleFileSelect);
+        $("#csv-file").change(handleFileSelect);
+        $(".newFile").change(handleFileSelect);
       });
 
      // triggers when file is uploaded
     function handleFileSelect(evt) {
     evt.preventDefault();
     $(".buttonDiv").html("<p>Wait for it....</p>");
+    $(".newFile").css("display", "block");
     var file = evt.target.files[0];
 
 // change file to JSON

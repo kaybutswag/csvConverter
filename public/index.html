@@ -19,13 +19,13 @@
 </h4>
     	<br>
     	<h5><span>Input:</span> I can take your .CSV with post ID's and short links and any other information. (Don't bother deleting extra columns). </h5>
-    	<h5><span>Output:</span> I'll give you a .CSV with the original ID's, shortened links, and extended link. </h5>
+    	<h5><span>Output:</span> I'll give you a .CSV with the original ID's, shortened links, and the original long links. </h5>
     	<br>
     	<h6>There are a few stipulations: </h6>
 	    	<ol>
 	    		<li>Only takes single .CSV File at a time</li>
 	    		<li>The Shortened Link Column must have the title "Link".</li>
-	    		<li>The ID Column must be entitled "Channel Post ID".</li>
+	    		<li>The ID Column must have the title "Channel Post ID".</li>
 	    		<li>The program knows that some link data is not perfect and will correctly extract link if there is a space or comma after the link. Other characters might cause an issue.</li>
 	    		<li>This is an 80% App(Pareto's Law) and will likely not convert every link. A time limit has been set, so the program will not spend an infinite amount of time on one link. <em>LinkedIn links are known to elicit an error.</em></li>
 	    		<li>If no link is in the "Link" column you will see "No Link". If the link couldn't be found, you will see "error."</li>
@@ -44,6 +44,7 @@
 	    </div>
 	    <div class="buttonDiv">
 	    </div>
+	    <input type="button" class="newFile" value="New File" onClick="window.location.reload()">
     </div>
     <script src="/app/papaparse.min.js"></script>
     <script src="/app/app.js"></script>
