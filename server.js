@@ -38,7 +38,7 @@ app.post("/runrequest", function (req,res){
                 var _longURLs=longURLs;
                 sortLongUrls(_longURLs,res);
 
-              }, 60000 );
+              }, 20000 );
 
 //gets link and processes the rest
 
@@ -99,7 +99,6 @@ app.post("/runrequest", function (req,res){
             writeFile(thispath, csv, function (err) {
               if (err) return console.log(err)
               // console.log('file is written')
-            console.log(Date.now());
             });
         res.json("done");
        
