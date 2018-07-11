@@ -1,6 +1,6 @@
 # Get Long Links
 
-NPM Packages: express, papaparser, request, write-file
+NPM Packages: express, papaparser, request, write
 
 This app can take an uploaded csv file and convert all short links in the "Link Column."
 
