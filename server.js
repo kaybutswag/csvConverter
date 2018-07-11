@@ -94,13 +94,13 @@ app.post("/runrequest", function (req,res){
             allData.push({"Channel Post ID": col1[i], "Short Link":col2[i], "Long Link": col3[i]});
         }
 
-        var csv = papa.unparse(allData);
-        var thispath=path.join(__dirname, "/public/assets/newLinks.csv");
-            writeFile(thispath, csv, function (err) {
-              if (err) return console.log(err)
-              // console.log('file is written')
-            });
-        res.json("done");
+        // var csv = papa.unparse(allData);
+        // var thispath=path.join(__dirname, "/public/assets/newLinks.csv");
+        //     writeFile(thispath, csv, function (err) {
+        //       if (err) return console.log(err)
+        //       // console.log('file is written')
+        //     });
+        res.json(allData);
        
     }
 

@@ -1,9 +1,16 @@
-    var fileData;
+    var fileData, csvData;
     var toSearch=[], ids=[], newString="",shortLink="";
+    var date=Date.now();
+    var newFileName="links_"+date+".csv";
 
      $(document).ready(function(){
         $("#csv-file").change(handleFileSelect);
         $(".newFile").change(handleFileSelect);
+
+        $( ".buttonDiv").on( "click", ".download", function( event ) {
+            event.preventDefault();
+            download(newFileName,csvData);
+        });
       });
 
      // triggers when file is uploaded
@@ -23,6 +30,7 @@
         shrinkData(fileData)
       }
     });
+  }
 
     //format short links and extract ids
     function shrinkData(longData){
@@ -50,7 +58,7 @@
   }
 
 //rest of app performed server side
-    function sendData(channelIds,URLs) {
+function sendData(channelIds,URLs) {
     $.ajax({
     method: "POST",
     url: "/runrequest",
@@ -60,11 +68,11 @@
      shortURL: URLs
     }
   })
-  .then(function(data) {
-    // console.log(data);
+  .then(function(myData) {
 
-      if(data==="done"){
-        $(".buttonDiv").html("<a href='/assets/newLinks.csv' target='_blank' download><button>Download File</button></a>");
+      if(myData){
+        csvData = Papa.unparse(myData);
+        $(".buttonDiv").html("<button class='download'>Download File</button>");
       }
 
       else{
@@ -73,7 +81,19 @@
 
     });
   }
-   
-      
+
+
+  function download(filename, text) {
+      var element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', filename);
+
+        element.style.display = 'none';
+        document.body.appendChild(element);
+
+        element.click();
+
+        document.body.removeChild(element);
+  
   }
 

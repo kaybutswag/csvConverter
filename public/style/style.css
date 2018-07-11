@@ -40,8 +40,11 @@ button{
 
 .newFile{
 	background-color: #fafafa;
-	margin-top: 10px;
-	margin-bottom: 10px;
 	display: none;
+	margin-left: 20px;
+}
+
+.topHalf{
+	display: flex;
 }
 

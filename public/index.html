@@ -39,12 +39,15 @@
 	    		<li>In that case feel free to reach out to Katharine Wagner (kwagner@spredfast.com).</li>
 	    	</ol>
 	    <br>
-	    <div class="fileAsk">
-	      <input type="file" id="csv-file" name="files"/>
-	    </div>
+	    <div class="topHalf">
+		    <div class="fileAsk">
+		      <input type="file" id="csv-file" name="files"/> 
+		    </div>
+		    <input type="button" class="newFile" value="I want to upload a new File" onClick="window.location.reload()">
+		  </div>
 	    <div class="buttonDiv">
 	    </div>
-	    <input type="button" class="newFile" value="I want to upload a new File" onClick="window.location.reload()">
+	    
     </div>
     <script src="/app/papaparse.min.js"></script>
     <script src="/app/app.js"></script>
